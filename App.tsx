@@ -18,18 +18,26 @@ const App: React.FC = () => {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const resultsRef = useRef<HTMLDivElement>(null);
   const isInitialMount = useRef(true);
+  const hasUserInteracted = useRef(false);
 
   const t = translations[language];
 
-  // Reset subcategory when category or language changes
+  // Reset subcategory when category or language changes (but not on initial mount)
   useEffect(() => {
+    if (isInitialMount.current) {
+      return;
+    }
     setSelectedSubcategory("All");
   }, [selectedCategory, language]);
 
   // Scroll to results when category or subcategory changes (but not on initial mount)
   useEffect(() => {
     if (isInitialMount.current) {
-      isInitialMount.current = false;
+      return;
+    }
+
+    // Only scroll if user has interacted (clicked a category button)
+    if (!hasUserInteracted.current) {
       return;
     }
 
@@ -49,6 +57,17 @@ const App: React.FC = () => {
       }, 100);
     }
   }, [selectedCategory, selectedSubcategory]);
+
+  // Mark initial mount as complete after first render and ensure page stays at top
+  useEffect(() => {
+    // Ensure page stays at top on initial load
+    window.scrollTo(0, 0);
+    // Prevent browser scroll restoration
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    isInitialMount.current = false;
+  }, []);
 
   // Show/hide back to top button based on scroll position
   useEffect(() => {
@@ -112,6 +131,16 @@ const App: React.FC = () => {
   useEffect(() => {
     if (isInitialMount.current) {
       return;
+    }
+
+    // Don't scroll if user hasn't interacted yet
+    if (!hasUserInteracted.current && searchTerm === "") {
+      return;
+    }
+
+    // Mark interaction when user starts typing
+    if (searchTerm.length > 0) {
+      hasUserInteracted.current = true;
     }
 
     // Don't scroll if search term is too short (less than 3 characters)
@@ -254,14 +283,18 @@ const App: React.FC = () => {
                 key={cat}
                 label={t.categories[cat]}
                 category={cat}
-                onClick={() =>
-                  setSelectedCategory(selectedCategory === cat ? "All" : cat)
-                }
+                onClick={() => {
+                  hasUserInteracted.current = true;
+                  setSelectedCategory(selectedCategory === cat ? "All" : cat);
+                }}
                 isSelected={selectedCategory === cat}
               />
             ))}
             <button
-              onClick={() => setSelectedCategory("All")}
+              onClick={() => {
+                hasUserInteracted.current = true;
+                setSelectedCategory("All");
+              }}
               className={`
                 flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all duration-200 w-full h-32 md:h-40
                 ${
@@ -285,7 +318,10 @@ const App: React.FC = () => {
             <div className="overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide">
               <div className="flex gap-2 whitespace-nowrap">
                 <button
-                  onClick={() => setSelectedSubcategory("All")}
+                  onClick={() => {
+                    hasUserInteracted.current = true;
+                    setSelectedSubcategory("All");
+                  }}
                   className={`px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 ${
                     selectedSubcategory === "All"
                       ? "bg-blue-800 text-white shadow-md transform scale-105"
@@ -297,7 +333,10 @@ const App: React.FC = () => {
                 {subcategories.map((sub) => (
                   <button
                     key={sub}
-                    onClick={() => setSelectedSubcategory(sub)}
+                    onClick={() => {
+                      hasUserInteracted.current = true;
+                      setSelectedSubcategory(sub);
+                    }}
                     className={`px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 ${
                       selectedSubcategory === sub
                         ? "bg-blue-800 text-white shadow-md transform scale-105"
