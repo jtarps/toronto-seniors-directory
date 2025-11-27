@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embed Code Generator - Toronto Seniors Directory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            white-space: pre;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Toronto Seniors Directory - Embed Code Generator</h1>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Configuration</h2>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Your Directory URL:</label>
+                    <input 
+                        type="text" 
+                        id="directoryUrl" 
+                        value="https://your-domain.com/embed.html"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="https://your-domain.com/embed.html"
+                    >
+                    <p class="text-sm text-gray-500 mt-1">Enter the full URL where your embed.html file is hosted</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">Height (px):</label>
+                    <input 
+                        type="number" 
+                        id="height" 
+                        value="800"
+                        min="400"
+                        max="2000"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">Width:</label>
+                    <select 
+                        id="width" 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
+                        <option value="100%">100% (Full Width)</option>
+                        <option value="90%">90%</option>
+                        <option value="80%">80%</option>
+                        <option value="1200px">1200px (Fixed)</option>
+                        <option value="1000px">1000px (Fixed)</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="flex items-center">
+                        <input 
+                            type="checkbox" 
+                            id="responsive" 
+                            checked
+                            class="mr-2"
+                        >
+                        <span>Use responsive embed (auto-adjusts to content)</span>
+                    </label>
+                </div>
+                
+                <div>
+                    <label class="flex items-center">
+                        <input 
+                            type="checkbox" 
+                            id="allowClipboard" 
+                            checked
+                            class="mr-2"
+                        >
+                        <span>Allow clipboard access (for copying phone numbers)</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Generated Embed Code</h2>
+            <p class="text-sm text-gray-600 mb-4">Copy and paste this code into your website:</p>
+            
+            <div class="code-block" id="embedCode"></div>
+            
+            <button 
+                onclick="copyCode()" 
+                class="mt-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+                Copy Code
+            </button>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Preview</h2>
+            <div id="preview" class="border border-gray-300 rounded-md overflow-hidden"></div>
+        </div>
+    </div>
+    
+    <script>
+        const directoryUrl = document.getElementById('directoryUrl');
+        const height = document.getElementById('height');
+        const width = document.getElementById('width');
+        const responsive = document.getElementById('responsive');
+        const allowClipboard = document.getElementById('allowClipboard');
+        const embedCode = document.getElementById('embedCode');
+        const preview = document.getElementById('preview');
+        
+        function generateCode() {
+            const url = directoryUrl.value || 'https://your-domain.com/embed.html';
+            const h = height.value || '800';
+            const w = width.value || '100%';
+            const isResponsive = responsive.checked;
+            const allowClip = allowClipboard.checked;
+            
+            let code;
+            
+            if (isResponsive) {
+                code = `<div style="position: relative; width: 100%; padding-bottom: 120%; overflow: hidden;">
+  <iframe 
+    src="${url}" 
+    width="100%" 
+    height="100%" 
+    frameborder="0"
+    style="position: absolute; top: 0; left: 0; border: none;"
+    title="Toronto Seniors Directory"
+    ${allowClip ? 'allow="clipboard-read; clipboard-write"' : ''}
+    scrolling="no"
+  ></iframe>
+</div>`;
+            } else {
+                code = `<iframe 
+  src="${url}" 
+  width="${w}" 
+  height="${h}px" 
+  frameborder="0"
+  style="border: none; min-height: ${h}px;"
+  title="Toronto Seniors Directory"
+  ${allowClip ? 'allow="clipboard-read; clipboard-write"' : ''}
+></iframe>`;
+            }
+            
+            embedCode.textContent = code;
+            
+            // Update preview
+            preview.innerHTML = code;
+        }
+        
+        function copyCode() {
+            const code = embedCode.textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('Code copied to clipboard!');
+            }).catch(() => {
+                // Fallback for older browsers
+                const textarea = document.createElement('textarea');
+                textarea.value = code;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('Code copied to clipboard!');
+            });
+        }
+        
+        // Update code when inputs change
+        [directoryUrl, height, width, responsive, allowClipboard].forEach(element => {
+            element.addEventListener('input', generateCode);
+            element.addEventListener('change', generateCode);
+        });
+        
+        // Generate initial code
+        generateCode();
+    </script>
+</body>
+</html>
+

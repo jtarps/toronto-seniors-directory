@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example: Embedded Toronto Seniors Directory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .embed-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .code-example {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Community Resources Website</h1>
+        <p>This is an example of how the Toronto Seniors Directory can be embedded on your website.</p>
+    </div>
+
+    <div class="embed-container">
+        <h2>Toronto Seniors Directory</h2>
+        <p>Find services and resources for seniors in Toronto:</p>
+        
+        <!-- EMBED CODE STARTS HERE -->
+        <iframe 
+            src="embed.html" 
+            width="100%" 
+            height="800px" 
+            frameborder="0"
+            style="border: none; min-height: 800px; display: block; margin-top: 20px;"
+            title="Toronto Seniors Directory"
+            allow="clipboard-read; clipboard-write"
+        ></iframe>
+        <!-- EMBED CODE ENDS HERE -->
+    </div>
+
+    <div class="header" style="margin-top: 20px;">
+        <h3>Embed Code Used:</h3>
+        <div class="code-example">
+&lt;iframe 
+    src="embed.html" 
+    width="100%" 
+    height="800px" 
+    frameborder="0"
+    style="border: none; min-height: 800px; display: block;"
+    title="Toronto Seniors Directory"
+    allow="clipboard-read; clipboard-write"
+&gt;&lt;/iframe&gt;
+        </div>
+        <p style="margin-top: 15px;">
+            <strong>Note:</strong> Replace <code>embed.html</code> with the full URL to your hosted embed.html file (e.g., <code>https://your-domain.com/embed.html</code>)
+        </p>
+    </div>
+</body>
+</html>
+

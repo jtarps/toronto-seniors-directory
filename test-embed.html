@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Embed - Toronto Seniors Directory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        h1 {
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+        .embed-container {
+            width: 100%;
+            margin: 30px 0;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .instructions {
+            background: #fef3c7;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+            margin: 20px 0;
+        }
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Toronto Seniors Directory - Test Embed</h1>
+        <p>This is a test page to see how the directory looks when embedded on your website.</p>
+        
+        <div class="instructions">
+            <h3>📋 Instructions for Testing:</h3>
+            <ol>
+                <li><strong>Build the project:</strong> Run <code>npm run build</code> in your project directory</li>
+                <li><strong>Deploy the dist folder:</strong> Upload the <code>dist</code> folder to your web server</li>
+                <li><strong>Update the URL below:</strong> Replace <code>YOUR-DOMAIN-HERE</code> with your actual domain</li>
+                <li><strong>Copy this code to your Haven at Home website</strong></li>
+            </ol>
+        </div>
+
+        <h2>Embedded Directory:</h2>
+        <div class="embed-container">
+            <!-- REPLACE THIS URL WITH YOUR ACTUAL DOMAIN -->
+            <iframe 
+                src="http://localhost:3000/embed.html" 
+                width="100%" 
+                height="900px" 
+                frameborder="0"
+                style="border: none; display: block;"
+                title="Toronto Seniors Directory"
+                allow="clipboard-read; clipboard-write"
+            ></iframe>
+        </div>
+
+        <div class="instructions">
+            <h3>📝 Embed Code for Your Website:</h3>
+            <p>Copy and paste this code into your Haven at Home website where you want the directory to appear:</p>
+            <div class="code-block">
+&lt;div style="width: 100%; margin: 30px 0;"&gt;
+    &lt;iframe 
+        src="https://YOUR-DOMAIN-HERE/embed.html" 
+        width="100%" 
+        height="900px" 
+        frameborder="0"
+        style="border: none; min-height: 900px;"
+        title="Directory of Services for Seniors and Caregivers in Toronto"
+        allow="clipboard-read; clipboard-write"
+    &gt;&lt;/iframe&gt;
+&lt;/div&gt;
+            </div>
+            <p><strong>Remember to replace <code>YOUR-DOMAIN-HERE</code> with your actual domain URL!</strong></p>
+        </div>
+
+        <h3>💡 Tips:</h3>
+        <ul>
+            <li>Adjust the <code>height</code> value (currently 900px) to fit your page layout</li>
+            <li>The directory is fully responsive and will work on mobile devices</li>
+            <li>You can add custom styling around the iframe container to match your website's design</li>
+        </ul>
+    </div>
+</body>
+</html>
+

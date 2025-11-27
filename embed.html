@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toronto Seniors Directory - Embed</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+        font-size: 18px;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+      /* Ensure the app fills the iframe */
+      #root {
+        width: 100%;
+        min-height: 100vh;
+      }
+      /* Remove any body margins that might cause scroll issues */
+      html, body {
+        height: 100%;
+        width: 100%;
+      }
+      /* Fade-in animation */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.3s ease-out;
+      }
+    </style>
+  </head>
+  <body class="bg-stone-50 text-slate-900">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
+
