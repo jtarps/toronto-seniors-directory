@@ -3,7 +3,20 @@ import { GoogleGenAI } from "@google/genai";
 import { services } from '../data';
 import { Language } from '../types';
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Lazy initialization - only create when needed and API key is available
+let ai: GoogleGenAI | null = null;
+
+const getAI = () => {
+  if (!ai) {
+    // In Vite, use import.meta.env for environment variables
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY || import.meta.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error('API key not configured');
+    }
+    ai = new GoogleGenAI({ apiKey });
+  }
+  return ai;
+};
 
 const languageNames: Record<Language, string> = {
   en: 'English',
@@ -68,10 +81,8 @@ const filterRelevantServices = (query: string, lang: Language) => {
 
 export const queryGemini = async (userQuery: string, language: Language = 'en') => {
   try {
-    // Check if API key is available
-    if (!process.env.API_KEY) {
-      throw new Error('API key not configured');
-    }
+    // Get AI instance (will initialize if needed and check for API key)
+    const aiInstance = getAI();
 
     // Filter and condense services to reduce token usage by ~80%
     const relevantServices = filterRelevantServices(userQuery, language);
@@ -96,7 +107,7 @@ export const queryGemini = async (userQuery: string, language: Language = 'en') 
       Context Directory: ${context}
     `;
 
-    const response = await ai.models.generateContent({
+    const response = await aiInstance.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: userQuery,
       config: {
